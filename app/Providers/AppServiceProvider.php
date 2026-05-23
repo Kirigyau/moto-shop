@@ -8,6 +8,7 @@ use App\Models\Product;
 use App\Support\Cart;
 use Illuminate\Auth\Events\Login;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,6 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->configureProductionUrl();
+
         Event::listen(Login::class, MergeGuestCartOnLogin::class);
 
         View::composer('layouts.shop', function ($view): void {
@@ -70,5 +73,26 @@ class AppServiceProvider extends ServiceProvider
                 'adminTotalProducts' => Product::query()->count(),
             ]);
         });
+    }
+
+    private function configureProductionUrl(): void
+    {
+        if (! $this->app->environment('production')) {
+            return;
+        }
+
+        URL::forceScheme('https');
+
+        $domain = env('RAILWAY_PUBLIC_DOMAIN');
+        if (is_string($domain) && $domain !== '') {
+            URL::forceRootUrl('https://'.$domain);
+
+            return;
+        }
+
+        $appUrl = rtrim((string) config('app.url'), '/');
+        if ($appUrl !== '' && ! str_contains($appUrl, 'localhost') && ! str_contains($appUrl, 'your-service')) {
+            URL::forceRootUrl($appUrl);
+        }
     }
 }

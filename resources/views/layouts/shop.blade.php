@@ -17,7 +17,7 @@
             } catch (e) {}
         })();
     </script>
-    <link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+    <link rel="stylesheet" href="{{ public_asset('css/shop.css') }}">
     @stack('head')
 </head>
 <body>
@@ -156,9 +156,9 @@
         </div>
     </footer>
 
-    <script src="{{ asset('js/theme.js') }}" defer></script>
-    <script src="{{ asset('js/search-suggest.js') }}" defer></script>
-    <script src="{{ asset('js/cart-preview.js') }}" defer></script>
+    <script src="{{ public_asset('js/theme.js') }}" defer></script>
+    <script src="{{ public_asset('js/search-suggest.js') }}" defer></script>
+    <script src="{{ public_asset('js/cart-preview.js') }}" defer></script>
     @stack('scripts')
 </body>
 </html>

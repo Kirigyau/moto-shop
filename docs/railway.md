@@ -19,6 +19,13 @@
 3. В сервисе приложения → **Variables** скопируйте блок из `railway.env.example`.
 4. Укажите `APP_KEY`, `APP_URL`, привяжите `DB_URL=${{Postgres.DATABASE_URL}}`.
 5. **Deploy** — перед стартом выполнятся миграции и `DeploySeeder`.
+6. **APP_URL** — в Variables укажите `https://${{RAILWAY_PUBLIC_DOMAIN}}` (см. `railway.env.example`). Без https стили и скрипты могут не загружаться.
+
+## Стили / картинки на проде
+
+- CSS и JS лежат в `public/css`, `public/js` и подключаются через `public_asset()` (относительные пути).
+- Картинки товаров в сиде — внешние URL (Unsplash). Загруженные в админке файлы — `/storage/...`; нужен `storage:link` (выполняется в preDeploy).
+- Предупреждение Docker `SecretsUsedInArgOrEnv` про `APP_KEY` на этапе сборки — от Nixpacks, на работу сайта не влияет. `APP_KEY` задавайте только в Variables Railway, не в репозитории.
 
 ## Идемпотентный сид
 

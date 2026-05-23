@@ -5,7 +5,7 @@
   },
   "deploy": {
     "preDeployCommand": "/bin/sh ./scripts/railway-predeploy.sh",
-    "startCommand": "php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=$PORT",
+    "startCommand": "/bin/sh ./scripts/railway-start.sh",
     "healthcheckPath": "/up",
     "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",

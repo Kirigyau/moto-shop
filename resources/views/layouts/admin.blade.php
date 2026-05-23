@@ -17,7 +17,7 @@
             } catch (e) {}
         })();
     </script>
-    <link rel="stylesheet" href="{{ asset('css/shop.css') }}">
+    <link rel="stylesheet" href="{{ public_asset('css/shop.css') }}">
 </head>
 <body class="admin-body">
     <div class="admin-shell">
@@ -156,7 +156,7 @@
 
     <div class="admin-sidebar-backdrop" id="admin-sidebar-backdrop" hidden></div>
 
-    <script src="{{ asset('js/theme.js') }}" defer></script>
-    <script src="{{ asset('js/admin.js') }}" defer></script>
+    <script src="{{ public_asset('js/theme.js') }}" defer></script>
+    <script src="{{ public_asset('js/admin.js') }}" defer></script>
 </body>
 </html>

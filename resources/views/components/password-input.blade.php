@@ -45,6 +45,6 @@
 
 @once
     @push('scripts')
-        <script src="{{ asset('js/password-toggle.js') }}" defer></script>
+        <script src="{{ public_asset('js/password-toggle.js') }}" defer></script>
     @endpush
 @endonce

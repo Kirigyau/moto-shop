@@ -59,5 +59,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/hero-slider.js') }}" defer></script>
+    <script src="{{ public_asset('js/hero-slider.js') }}" defer></script>
 @endpush

@@ -141,5 +141,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('js/catalog-filters.js') }}" defer></script>
+    <script src="{{ public_asset('js/catalog-filters.js') }}" defer></script>
 @endpush
