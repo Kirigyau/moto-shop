@@ -4,6 +4,8 @@ set -eu
 # На Railway переменные доступны только в runtime; не кэшируем конфиг с localhost.
 php artisan config:clear
 
+/bin/sh ./scripts/ensure-storage.sh
+
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache

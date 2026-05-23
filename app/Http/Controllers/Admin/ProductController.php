@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\ShopController;
 use App\Models\Product;
+use App\Support\StoredImage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -181,7 +183,12 @@ class ProductController extends Controller
     private function resolveImage(Request $request, string $urlField, ?string $previous = null): string
     {
         if ($request->hasFile('image_upload')) {
-            return $request->file('image_upload')->store('products', 'public');
+            $stored = $request->file('image_upload')->store('products', 'public');
+            if ($previous !== null && StoredImage::isUploadedPath($previous) && $previous !== $stored) {
+                Storage::disk('public')->delete(ltrim($previous, '/'));
+            }
+
+            return $stored;
         }
 
         if ($urlField !== '') {

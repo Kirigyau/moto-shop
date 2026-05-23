@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Support\StoredImage;
 use Illuminate\Database\Seeder;
 
 class ProductSeeder extends Seeder
@@ -47,23 +48,43 @@ class ProductSeeder extends Seeder
 
         foreach ($rows as $r) {
             $slug = $r[5];
+            $product = Product::query()->firstOrNew(['slug' => $slug]);
 
-            Product::query()->updateOrCreate(
-                ['slug' => $slug],
-                [
-                    'category' => $r[0],
-                    'subcategory' => $r[1],
-                    'brand' => $r[2],
-                    'engine_type' => $r[3],
-                    'title' => $r[4],
-                    'price' => $r[6],
-                    'old_price' => $r[7],
-                    'badge' => $r[8],
-                    'image' => $this->demoImages[$slug] ?? '',
-                    'specs' => $r[9],
-                    'description' => $r[10],
-                ]
-            );
+            $product->fill([
+                'category' => $r[0],
+                'subcategory' => $r[1],
+                'brand' => $r[2],
+                'engine_type' => $r[3],
+                'title' => $r[4],
+                'price' => $r[6],
+                'old_price' => $r[7],
+                'badge' => $r[8],
+                'specs' => $r[9],
+                'description' => $r[10],
+            ]);
+
+            $product->image = $this->resolveImageForSeed($product, $slug);
+            $product->save();
         }
+    }
+
+    private function resolveImageForSeed(Product $product, string $slug): string
+    {
+        $demo = $this->demoImages[$slug] ?? '';
+        $current = trim((string) $product->image);
+
+        if (! $product->exists) {
+            return $demo;
+        }
+
+        if (StoredImage::isUploadedPath($current)) {
+            return $current;
+        }
+
+        if (StoredImage::isRemoteDemoUrl($current)) {
+            return $demo;
+        }
+
+        return $current !== '' ? $current : $demo;
     }
 }

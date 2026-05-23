@@ -86,8 +86,12 @@
 
             <label class="admin-file-label">
                 <span>Загрузить файл</span>
-                <input type="file" name="image_upload" accept="image/*">
+                <input type="file" name="image_upload" accept="image/jpeg,image/png,image/webp,image/gif">
+                <span class="admin-field-hint">JPG, PNG, WebP или GIF, до 8 МБ. После загрузки сохраните форму.</span>
             </label>
+            @error('image_upload')
+                <span class="admin-field-hint" role="alert">{{ $message }}</span>
+            @enderror
         </div>
     </section>
 

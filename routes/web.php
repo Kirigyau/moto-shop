@@ -8,6 +8,17 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+
+// Если symlink public/storage недоступен (Docker/Railway), отдаём файлы через Laravel.
+Route::get('/storage/{path}', function (string $path) {
+    $path = str_replace(['..', '\\'], '', $path);
+    if ($path === '' || ! Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    return Storage::disk('public')->response($path);
+})->where('path', '.*')->name('storage.public');
 
 Route::get('/', [ShopController::class, 'home'])->name('home');
 

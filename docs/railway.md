@@ -33,6 +33,12 @@
 
 Повторный деплой безопасен для данных в PostgreSQL на Railway.
 
-## Volume (загрузка фото)
+## Volume (загрузка фото в админке)
 
-Для сохранения картинок между деплоями смонтируйте Volume на `/app/storage/app/public`.
+Без Volume загруженные файлы **пропадают при каждом redeploy**.
+
+1. В сервисе Laravel: **Volumes** → Add Volume.
+2. Mount path: `/app/storage/app/public`
+3. После деплоя один раз: `php artisan storage:link` (выполняется в `ensure-storage.sh` автоматически).
+
+Сид `DeploySeeder` **не затирает** ваши загрузки (`products/…` на диске), только демо-URL Unsplash.
