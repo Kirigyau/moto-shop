@@ -4,16 +4,18 @@
 [phases.setup]
 # При переопределении nixPkgs нужно явно указать composer (иначе install/build падают с exit 127).
 nixPkgs = [
-  "php83",
-  "php83Packages.composer",
-  "php83Extensions.pdo_pgsql",
-  "php83Extensions.gd",
-  "php83Extensions.mbstring",
-  "php83Extensions.openssl",
-  "php83Extensions.curl",
-  "php83Extensions.zip",
-  "php83Extensions.fileinfo",
+  "php84",
+  "php84Packages.composer",
+  "php84Extensions.pdo_pgsql",
+  "php84Extensions.gd",
+  "php84Extensions.mbstring",
+  "php84Extensions.openssl",
+  "php84Extensions.curl",
+  "php84Extensions.zip",
+  "php84Extensions.fileinfo",
 ]
 
 [phases.install]
-cmds = ["composer install --no-dev --optimize-autoloader --no-interaction"]
+cmds = [
+  "COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --optimize-autoloader --no-interaction",
+]
