@@ -3,7 +3,7 @@
 
 [build]
 builder = "nixpacks"
-buildCommand = "composer install --no-dev --optimize-autoloader --no-interaction"
+# Зависимости — в nixpacks.toml [phases.install]; отдельный buildCommand дублировал composer install.
 
 [deploy]
 preDeployCommand = "/bin/sh ./scripts/railway-predeploy.sh"

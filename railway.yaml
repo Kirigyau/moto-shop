@@ -6,7 +6,7 @@
 
 build:
   builder: NIXPACKS
-  buildCommand: composer install --no-dev --optimize-autoloader --no-interaction
+  # composer install — в nixpacks.toml [phases.install]
 
 deploy:
   preDeployCommand: /bin/sh ./scripts/railway-predeploy.sh
