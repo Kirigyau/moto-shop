@@ -6,7 +6,7 @@
             <span class="product-card__badge @if ($product->badge === 'Распродажа') product-card__badge--sale @endif">{{ $product->badge }}</span>
         @endif
         <a href="{{ route('product.show', $product) }}">
-            <img src="{{ $product->image_card_src }}" alt="" loading="lazy" decoding="async" width="640" height="480">
+            <img src="{{ $product->image_card_src ?: public_asset('images/placeholder-product.svg') }}" alt="" loading="lazy" decoding="async" width="640" height="480">
         </a>
     </div>
     <div class="product-card__body">

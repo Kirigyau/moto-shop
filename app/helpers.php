@@ -9,3 +9,13 @@ if (! function_exists('public_asset')) {
         return '/'.ltrim($path, '/');
     }
 }
+
+if (! function_exists('public_url')) {
+    /**
+     * Относительный URL маршрута (для fetch/AJAX на хостинге).
+     */
+    function public_url(string $path): string
+    {
+        return '/'.ltrim($path, '/');
+    }
+}

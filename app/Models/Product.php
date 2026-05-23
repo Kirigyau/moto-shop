@@ -61,8 +61,8 @@ class Product extends Model
 
     private function resolveImagePath(): string
     {
-        $img = (string) ($this->attributes['image'] ?? '');
-        if ($img === '') {
+        $img = trim((string) ($this->attributes['image'] ?? ''));
+        if ($img === '' || $img === '_') {
             return '';
         }
         if (preg_match('#^https?://#i', $img)) {
@@ -86,5 +86,31 @@ class Product extends Model
     public function scopeCategory(Builder $query, string $category): Builder
     {
         return $query->where('category', $category);
+    }
+
+    /**
+     * Поиск по названию, описанию и бренду (без учёта регистра на PostgreSQL).
+     *
+     * @param  Builder<Product>  $query
+     * @return Builder<Product>
+     */
+    public function scopeSearchText(Builder $query, string $q): Builder
+    {
+        $like = '%'.addcslashes($q, '%_\\').'%';
+        $driver = $query->getConnection()->getDriverName();
+
+        return $query->where(function (Builder $w) use ($like, $driver): void {
+            if ($driver === 'pgsql') {
+                $w->where('title', 'ilike', $like)
+                    ->orWhere('description', 'ilike', $like)
+                    ->orWhere('brand', 'ilike', $like);
+
+                return;
+            }
+
+            $w->where('title', 'like', $like)
+                ->orWhere('description', 'like', $like)
+                ->orWhere('brand', 'like', $like);
+        });
     }
 }

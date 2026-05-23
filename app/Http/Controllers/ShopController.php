@@ -42,10 +42,7 @@ class ShopController extends Controller
 
         $q = trim((string) $request->get('q', ''));
         if ($q !== '') {
-            $query->where(function ($w) use ($q) {
-                $w->where('title', 'like', '%'.$q.'%')
-                    ->orWhere('description', 'like', '%'.$q.'%');
-            });
+            $query->searchText($q);
         }
 
         if ($request->filled('price_from')) {
@@ -117,14 +114,9 @@ class ShopController extends Controller
         }
 
         $needle = mb_strtolower($q);
-        $like = '%'.addcslashes($q, '%_\\').'%';
 
         $candidates = Product::query()
-            ->where(function ($w) use ($like) {
-                $w->where('title', 'like', $like)
-                    ->orWhere('description', 'like', $like)
-                    ->orWhere('brand', 'like', $like);
-            })
+            ->searchText($q)
             ->limit(40)
             ->get(['id', 'title', 'slug', 'price', 'image', 'brand']);
 
@@ -149,9 +141,9 @@ class ShopController extends Controller
         return response()->json([
             'products' => $sorted->map(fn (Product $p) => [
                 'title' => $p->title,
-                'url' => route('product.show', $p),
+                'url' => public_url('/tovar/'.$p->slug),
                 'price' => number_format($p->price, 0, ',', ' ').' ₽',
-                'image' => $p->image_card_src,
+                'image' => $p->image_card_src ?: public_asset('images/placeholder-product.svg'),
             ]),
         ]);
     }
@@ -160,12 +152,7 @@ class ShopController extends Controller
     {
         $q = trim((string) $request->get('q', ''));
         $products = Product::query()
-            ->when($q !== '', function ($b) use ($q) {
-                $b->where(function ($w) use ($q) {
-                    $w->where('title', 'like', '%'.$q.'%')
-                        ->orWhere('description', 'like', '%'.$q.'%');
-                });
-            })
+            ->when($q !== '', fn ($b) => $b->searchText($q))
             ->orderBy('category')
             ->orderBy('title')
             ->paginate(12)

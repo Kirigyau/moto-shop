@@ -50,7 +50,7 @@
             <div class="search-wrap">
                 <form class="search" action="{{ route('search') }}" method="get" role="search" id="header-search-form">
                     <label class="sr-only" for="q">Поиск по каталогу</label>
-                    <input id="q" name="q" type="search" value="{{ request('q') }}" placeholder="Поиск: мопед, шлем, масло…" autocomplete="off" data-search-suggest="{{ route('search.suggest') }}">
+                    <input id="q" name="q" type="search" value="{{ request('q') }}" placeholder="Поиск: мопед, шлем, масло…" autocomplete="off" data-search-suggest="{{ public_url('/search/suggest') }}">
                     <button type="submit">Найти</button>
                 </form>
                 <div id="search-suggest" class="search-suggest" hidden></div>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="480" viewBox="0 0 640 480" role="img" aria-label="5B D>B>">
+  <rect width="640" height="480" fill="#e8e8e8"/>
+  <path fill="#b0b0b0" d="M160 320c0-66 54-120 120-120h80c66 0 120 54 120 120v20H160v-20zm120-160a80 80 0 1 1 0 160 80 80 0 0 1 0-160z"/>
+  <text x="320" y="400" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" fill="#888">5B D>B></text>
+</svg>
