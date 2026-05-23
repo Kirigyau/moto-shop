@@ -17,7 +17,7 @@
                 @if ($product->badge)
                     <span class="product-card__badge @if ($product->badge === 'Распродажа') product-card__badge--sale @endif">{{ $product->badge }}</span>
                 @endif
-                <img src="{{ $product->image_src }}" alt="" width="900" height="675" loading="eager">
+                <img src="{{ $product->image_detail_src }}" alt="" width="900" height="675" loading="eager" decoding="async" fetchpriority="high">
             </div>
             <div class="product-detail__info">
                 <h1 class="page-title product-detail__title">{{ $product->title }}</h1>

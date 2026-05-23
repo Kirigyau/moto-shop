@@ -151,7 +151,7 @@ class ShopController extends Controller
                 'title' => $p->title,
                 'url' => route('product.show', $p),
                 'price' => number_format($p->price, 0, ',', ' ').' ₽',
-                'image' => $p->image_src,
+                'image' => $p->image_card_src,
             ]),
         ]);
     }

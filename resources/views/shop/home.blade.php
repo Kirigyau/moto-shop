@@ -25,10 +25,10 @@
                         <div class="hero-slider__slide @if ($index === 0) is-active @endif" data-hero-slide>
                             @if ($slide->link)
                                 <a href="{{ $slide->link }}" class="hero-slider__link">
-                                    <img src="{{ $slide->image_src }}" width="900" height="520" alt="{{ $slide->alt ?? 'Реклама' }}" @if ($index === 0) loading="eager" @else loading="lazy" @endif>
+                                    <img src="{{ $slide->image_hero_src }}" width="900" height="520" alt="{{ $slide->alt ?? 'Реклама' }}" @if ($index === 0) loading="eager" fetchpriority="high" @else loading="lazy" @endif decoding="async">
                                 </a>
                             @else
-                                <img src="{{ $slide->image_src }}" width="900" height="520" alt="{{ $slide->alt ?? 'Реклама' }}" @if ($index === 0) loading="eager" @else loading="lazy" @endif>
+                                <img src="{{ $slide->image_hero_src }}" width="900" height="520" alt="{{ $slide->alt ?? 'Реклама' }}" @if ($index === 0) loading="eager" fetchpriority="high" @else loading="lazy" @endif decoding="async">
                             @endif
                         </div>
                     @endforeach

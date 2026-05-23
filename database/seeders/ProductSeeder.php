@@ -9,8 +9,6 @@ class ProductSeeder extends Seeder
 {
     public function run(): void
     {
-        Product::query()->delete();
-
         $rows = [
             // Мототехника
             ['mototekhnika', 'Кроссовые и эндуро', 'PROMAX', 'gasoline', 'Кроссовый мотоцикл PROMAX MX280', 'promax-mx280', 139_000, 159_900, 'Хит', 'https://picsum.photos/seed/mx280/640/480', ['Объём 250 см³', 'Мощность 24 л.с.', 'КПП механика', 'Двигатель 4T', 'Страна Тайвань'], 'Лёгкий кроссовый мотоцикл для тренировок и прогулок по бездорожью.'],
@@ -63,20 +61,22 @@ class ProductSeeder extends Seeder
         ];
 
         foreach ($rows as $i => $r) {
-            Product::query()->create([
-                'category' => $r[0],
-                'subcategory' => $r[1],
-                'brand' => $r[2],
-                'engine_type' => $r[3],
-                'title' => $r[4],
-                'slug' => $r[5],
-                'price' => $r[6],
-                'old_price' => $r[7],
-                'badge' => $r[8],
-                'image' => $images[$i] ?? $r[9],
-                'specs' => $r[10],
-                'description' => $r[11],
-            ]);
+            Product::query()->updateOrCreate(
+                ['slug' => $r[5]],
+                [
+                    'category' => $r[0],
+                    'subcategory' => $r[1],
+                    'brand' => $r[2],
+                    'engine_type' => $r[3],
+                    'title' => $r[4],
+                    'price' => $r[6],
+                    'old_price' => $r[7],
+                    'badge' => $r[8],
+                    'image' => $images[$i] ?? '',
+                    'specs' => $r[10],
+                    'description' => $r[11],
+                ]
+            );
         }
     }
 }

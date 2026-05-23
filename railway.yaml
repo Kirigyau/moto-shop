@@ -1,0 +1,22 @@
+# Справочник конфигурации деплоя (YAML).
+# Railway применяет файлы railway.toml или railway.json из корня репозитория.
+# Этот YAML для удобства чтения; при расхождении ориентируйтесь на railway.toml.
+#
+# Переменные окружения — только в панели Railway (см. railway.env.example).
+
+build:
+  builder: NIXPACKS
+  buildCommand: composer install --no-dev --optimize-autoloader --no-interaction
+
+deploy:
+  preDeployCommand: /bin/sh ./scripts/railway-predeploy.sh
+  startCommand: php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=$PORT
+  healthcheckPath: /up
+  healthcheckTimeout: 120
+  restartPolicyType: on_failure
+  restartPolicyMaxRetries: 3
+
+# preDeploy выполняет (scripts/railway-predeploy.sh):
+#   1. php artisan migrate --force
+#   2. php artisan db:seed --class=DeploySeeder --force
+#   3. php artisan storage:link

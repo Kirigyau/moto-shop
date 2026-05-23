@@ -1,0 +1,8 @@
+# Сборка PHP на Railway (расширения для PostgreSQL и картинок).
+# Локальный .env не используется.
+
+[phases.setup]
+nixPkgs = ["php83", "php83Extensions.pdo_pgsql", "php83Extensions.gd", "php83Extensions.mbstring", "php83Extensions.openssl", "php83Extensions.curl", "php83Extensions.zip"]
+
+[phases.install]
+cmds = ["composer install --no-dev --optimize-autoloader --no-interaction"]

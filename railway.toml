@@ -1,0 +1,14 @@
+# Railway Config as Code (читается автоматически при деплое).
+# Локально не используется — .env и SQLite не меняются.
+
+[build]
+builder = "nixpacks"
+buildCommand = "composer install --no-dev --optimize-autoloader --no-interaction"
+
+[deploy]
+preDeployCommand = "/bin/sh ./scripts/railway-predeploy.sh"
+startCommand = "php artisan config:cache && php artisan route:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=$PORT"
+healthcheckPath = "/up"
+healthcheckTimeout = 120
+restartPolicyType = "on_failure"
+restartPolicyMaxRetries = 3

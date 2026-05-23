@@ -12,22 +12,6 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $this->call(ProductSeeder::class);
-
-        $admin = User::query()->updateOrCreate(
-            ['email' => 'admin'],
-            [
-                'name' => 'Администратор',
-                'phone' => '79000000000',
-                'password' => 'admin',
-                'email_verified_at' => now(),
-                'is_admin' => true,
-            ]
-        );
-
-        User::query()
-            ->where('email', 'admin@motoshop.local')
-            ->where('id', '!=', $admin->id)
-            ->delete();
+        $this->call(DeploySeeder::class);
     }
 }

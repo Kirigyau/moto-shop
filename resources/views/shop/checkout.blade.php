@@ -26,7 +26,7 @@
                     <li class="checkout-line">
                         <a class="checkout-line__thumb{{ $p->image_src ? '' : ' checkout-line__thumb--empty' }}" href="{{ route('product.show', $p) }}" tabindex="-1" aria-hidden="true">
                             @if ($p->image_src)
-                                <img src="{{ $p->image_src }}" alt="" width="72" height="54" loading="lazy">
+                                <img src="{{ $p->image_card_src }}" alt="" width="72" height="54" loading="lazy" decoding="async">
                             @endif
                         </a>
                         <div class="checkout-line__body">
